@@ -13,10 +13,11 @@ export default async function handler(req, res) {
     const response = await fetch(streamUrl, {
       headers: {
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
-        
-        // --- ADD THESE HEADERS TO DEFEAT THE 403 ERROR ---
         'Referer': 'https://www.fancode.com/',
-        'Origin': 'https://www.fancode.com'
+        'Origin': 'https://www.fancode.com',
+        // Forward the client's IP address to the target server.
+        // Some services use this header to prevent abuse from proxies and data centers.
+        'X-Forwarded-For': req.headers['x-forwarded-for'] || req.socket.remoteAddress,
       }
     });
 
