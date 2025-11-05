@@ -62,6 +62,7 @@ const Player: React.FC = () => {
             return;
         }
 
+        const proxyUrl = `/api/proxy?url=${encodeURIComponent(streamUrl)}`;
         const videoElement = videoRef.current;
         let isEffectActive = true; // Flag to prevent race conditions on cleanup
 
@@ -76,11 +77,11 @@ const Player: React.FC = () => {
         if (streamUrl.includes('.m3u8') && Hls.isSupported()) {
             const hls = new Hls();
             hlsInstanceRef.current = hls;
-            hls.loadSource(streamUrl);
+            hls.loadSource(proxyUrl);
             hls.attachMedia(videoElement);
             hls.on(Hls.Events.MANIFEST_PARSED, initializePlyr);
         } else {
-            videoElement.src = streamUrl;
+            videoElement.src = proxyUrl;
             initializePlyr();
         }
 
