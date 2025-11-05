@@ -62,7 +62,8 @@ const Player: React.FC = () => {
             return;
         }
 
-        const proxyUrl = `/api/proxy?url=${encodeURIComponent(streamUrl)}`;
+        // TEMPORARY TEST: Using a public proxy to bypass blocking.
+        const proxyUrl = `https://cors.sh/${streamUrl}`;
         const videoElement = videoRef.current;
         let isEffectActive = true; // Flag to prevent race conditions on cleanup
 
